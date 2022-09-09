@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>weather test</title>
+</head>
+
+<body>
+    <h1>weather test</h1>
+
+    <p id="test">jkafdhialhg</p>
+    <p id="test2">klfdaskjgh</p>
+    <p id="test3"></p>
+
+    <div class="search-container">
+        <input type="text" placeholder="Enter a city name" id="city" >
+        <button id="search-btn">Search</button>
+        <!-- <input type="text"> -->
+    </div>
+
+    <script>
+        var x = document.getElementById("test");
+        var y = document.getElementById("test2");
+        var z = document.getElementById("test3");
+        var API_key = "76c9c8be1b8e842eb3df93dfb3b68250";
+        var lat, lon;
+        // let searchBtn = document.getElementById("search-btn");
+        let cityRef = document.getElementById("city");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(howPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function howPosition(position) {
+            //   x.innerHTML = "Latitude: " + position.coords.latitude +
+            //   "<br>Longitude: " + position.coords.longitude;
+            lon = position.coords.longitude;
+            lat = position.coords.latitude;
+            console.log(lat);
+            console.log(lon);
+            x.innerHTML = "Latitude: " + position.coords.latitude;
+            y.innerHTML = "Latitude: " + position.coords.longitude;
+            let api_url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_key}`;
+            console.log(api_url);
+            fetch(api_url)
+                .then((resp) => resp.json())
+                //If city name is valid
+                .then((data) => {
+                    console.log(data);
+                    // console.log(data);
+                    console.log(data.weather[0].icon);
+                    console.log(data.weather[0].main);
+                    console.log(data.weather[0].description);
+                    console.log(data.name);
+                    console.log(data.main.temp_min);
+                    console.log(data.main.temp_max);
+                    console.log(data.sys.sunrise);
+                    console.log(data.name);
+                    var date = new Date(data.sys.sunrise * 1000);
+                    console.log(date.toLocaleTimeString("default"));
+                    z.innerHTML =
+                        "response: " +
+                        data.weather[0].icon +
+                        "  " +
+                        data.weather[0].description +
+                        "  " +
+                        date.toLocaleTimeString("default");
+                    cityRef.value = data.name;
+                });
+        }
+        getLocation();
+        console.log(lat);
+
+    </script>
+    <script>
+        // console.log("gdfh");
+        // let key1=""
+        let searchBtn = document.getElementById("search-btn");
+        let cityRef1 = document.getElementById("city");
+        let getWeather = () => {
+            let cityValue = cityRef1.value;
+            // let f="dfhdff"
+            // console.log(cityValue);
+            var api_s = `https://api.openweathermap.org/data/2.5/weather?q=${cityValue}&appid=${API_key}&units=metric`;
+            console.log(api_s);
+
+            cityRef.value = "";
+    fetch(api_s)
+      .then((resp2) => resp2.json())
+      //If city name is valid
+      .then((data2) => {
+        console.log(data2);
+        console.log(data2.weather[0].icon);
+        console.log(data2.weather[0].main);
+        console.log(data2.weather[0].description);
+        console.log(data2.name);
+        console.log(data2.main.temp_min);
+        console.log(data2.main.temp_max);
+      })
+
+        }
+        searchBtn.addEventListener("click", getWeather);
+    </script>
+</body>
+
+</html>
