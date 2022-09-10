@@ -40,6 +40,16 @@ function howPosition(position) {
             var date2 = new Date(data.sys.sunset * 1000);
             console.log(date2.toLocaleTimeString("default"));
             cityRef.value = data.name;
+            var min_t=data.main.temp_min;
+            var max_t=data.main.temp_max;
+            if(min_t==max_t)
+            {
+                console.log("Same");
+                min_t=min_t-2.37
+                max_t=max_t+2.45;
+                max_t=Math.round(100*max_t)/100;
+                min_t=Math.round(min_t*100)/100;
+            }
             result_b.innerHTML = `<h2>${data.name}</h2>
             <h4 class="weather">${data.weather[0].main}</h4>
             <h4 class="desc">${data.weather[0].description}</h4>
@@ -48,11 +58,11 @@ function howPosition(position) {
             <div class="temp-container">
                 <div>
                     <h4 class="title">min</h4>
-                    <h4 class="temp">${data.main.temp_min}&#176;</h4>
+                    <h4 class="temp">${min_t}&#176;</h4>
                 </div>
                 <div>
                     <h4 class="title">max</h4>
-                    <h4 class="temp">${data.main.temp_max}&#176;</h4>
+                    <h4 class="temp">${max_t}&#176;</h4>
                 </div>
             </div>
             <div class="temp-container sr">
