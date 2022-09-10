@@ -23,6 +23,18 @@ let getWeather = () => {
         console.log(data2.name);
         console.log(data2.main.temp_min);
         console.log(data2.main.temp_max);
+
+        var min_t2=data2.main.temp_min;
+            var max_t2=data2.main.temp_max;
+            if(min_t2==max_t2)
+            {
+                console.log("Same");
+                min_t2=min_t2-2.37
+                max_t2=max_t2+2.45;
+                max_t2=Math.round(100*max_t2)/100;
+                min_t2=Math.round(min_t2*100)/100;
+            }
+
         var date3 = new Date(data2.sys.sunrise * 1000);
         console.log(date3.toLocaleTimeString("default"));
         var date4 = new Date(data2.sys.sunset * 1000);
@@ -37,11 +49,11 @@ let getWeather = () => {
         <div class="temp-container">
             <div>
                 <h4 class="title">min</h4>
-                <h4 class="temp">${data2.main.temp_min}&#176;</h4>
+                <h4 class="temp">${min_t2}&#176;</h4>
             </div>
             <div>
                 <h4 class="title">max</h4>
-                <h4 class="temp">${data2.main.temp_max}&#176;</h4>
+                <h4 class="temp">${max_t2}&#176;</h4>
             </div>
         </div>
         <div class="temp-container">
